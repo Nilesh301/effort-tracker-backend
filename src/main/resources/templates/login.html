@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Efforts Tracker</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- ✅ ADD STYLE HERE -->
+    <style>
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+       }
+
+        .login-card {
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            font-weight: bold;
+            font-size: 20px;
+            background-color: #343a40 !important;
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .link-text {
+            font-size: 14px;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid position-relative">
+
+        <!-- ✅ Center Title -->
+        <a class="navbar-brand fw-bold"
+           th:href="@{/index}">
+            Employee Efforts Tracker
+        </a>
+
+        <!-- ✅ Right Side Menu -->
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+              <!--  <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/register}">
+                        Register
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<br /><br />
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-4">
+
+        <div id="errorAlert" th:if="${param.error}" class="alert alert-danger text-center">
+            Invalid Email or Password
+        </div>
+
+
+        <div id="logoutAlert" th:if="${param.logout}" class="alert alert-success text-center">
+            You have been logged out.
+        </div>
+
+        <div class="card login-card">
+            <div class="card-header text-center">
+                Login
+            </div>
+
+            <div class="card-body">
+
+                <div id="successAlert" th:if="${param.resetSuccess}"
+                     class="alert alert-success text-center">
+                    Password updated successfully!
+                </div>
+
+                <div id="erroAlert" th:if="${param.error}"
+                     class="alert alert-danger text-center">
+                    Something went wrong. Try again!
+                </div>
+
+                <form method="post" th:action="@{/login}">
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="text"
+                               name="username"
+                               class="form-control"
+                               placeholder="Enter email address"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password"
+                               name="password"
+                               class="form-control"
+                               placeholder="Enter password"
+                               required>
+                    </div>
+                    <!--new code-->
+                    <div class="text-end mb-2">
+                        <a th:href="@{/forgot-password}" class="small">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Login
+                    </button>
+
+                    <span class="link-text">
+                        Not registered?
+                        <a th:href="@{/register}">Create account</a>
+                    </span>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    setTimeout(function () {
+        let alerts = document.querySelectorAll(".alert");
+
+        alerts.forEach(function(alert) {
+            alert.style.transition = "opacity 0.5s ease";
+            alert.style.opacity = "0";
+
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 2000);
+</script>
+
+</body>
+</html>

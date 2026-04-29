@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Efforts Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .register-card {
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            font-weight: bold;
+            font-size: 20px;
+            background-color: #343a40 !important;
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .link-text {
+            font-size: 14px;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Employee Efforts Tracker</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br />
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-5">
+
+        <div class="card register-card">
+
+            <div class="card-header text-center">
+                Create Account
+            </div>
+
+            <div th:if="${param.success}" class="alert alert-success text-center m-3">
+                You have successfully registered!
+            </div>
+
+            <div class="card-body">
+
+                <form th:action="@{/register/save}" th:object="${user}" method="post">
+
+                    <div class="mb-3">
+                        <label>First Name</label>
+                        <input class="form-control"
+                               th:field="*{firstName}"
+                               placeholder="Enter first name"/>
+                        <p th:errors="*{firstName}" class="text-danger"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Last Name</label>
+                        <input class="form-control"
+                               th:field="*{lastName}"
+                               placeholder="Enter last name"/>
+                        <p th:errors="*{lastName}" class="text-danger"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Date of Birth</label>
+                        <input type="date" th:field="*{dob}" class="form-control" required max="">
+                        <p th:errors="*{dob}" class="text-danger"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email"
+                               class="form-control"
+                               th:field="*{email}"
+                               placeholder="Enter email"/>
+                        <p th:errors="*{email}" class="text-danger"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password"
+                               class="form-control"
+                               th:field="*{password}"
+                               placeholder="Enter password"/>
+                        <p th:errors="*{password}" class="text-danger"></p>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Register
+                    </button>
+
+                    <span class="link-text">
+                        Already have an account?
+                        <a th:href="@{/login}">Login here</a>
+                    </span>
+
+                    <script>
+                        document.querySelector('input[type="date"]').max =
+                            new Date().toISOString().split("T")[0];
+                    </script>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    setTimeout(function () {
+        let alert = document.querySelector(".alert");
+
+        if (alert) {
+            alert.style.transition = "opacity 0.5s ease";
+            alert.style.opacity = "0";
+
+            setTimeout(() => alert.remove(), 500);
+        }
+    }, 1000); // shows for 2.5 seconds
+</script>
+</body>
+</html>
